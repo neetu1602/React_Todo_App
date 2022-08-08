@@ -1,43 +1,47 @@
-//this is complete
-import React, { Component } from 'react'
+import React, { useState } from "react";
+import { Button } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import TodoList from "./TodoList";
+import { Add } from "../redux/actions/action";
+import { useDispatch } from "react-redux";
 
-class TodoInput extends Component {
-    render() {
-        const {item, handleChange, handleSubmit, editItem} = this.props  
-        
-        return (
-            <div className="card card-body my-3">
-                <form onSubmit={handleSubmit} style={{display: 'flex'}}>
-                    <div className="input-group">
-                        <div className="input-group-prepend">
-                            <div className="input-group-text bg-info text-white">
-                            <i className="fas fa-book" />
-                            </div>
-                        
-                            </div>
+const InputTodo = () => {
+    const [data, setData] = useState("");
+    console.log(data);
+
+    const dispatch = useDispatch();
+
+    const addData = () => {
+        dispatch(Add(data));
+        setData("");
+    };
+
+    return (
+        <>
+            <div className="container">
+                <section className="mt-3 text-center">
+                    <h3> Enter Your Task </h3>
+                    <div className="todo col-lg-5 mx-auto d-flex justify-content-between align-items center">
                         <input
-                            type="text"
+                            name="task"
+                            value={data}
+                            onChange={(e) => setData(e.target.value)}
                             className="form-control"
-                            placeholder="Add Todo..."
-                            value={item}
-                            onChange={handleChange}
-                            style={{flex: '10', padding: '5px'}}
                         />
-                    
+                        <Button
+                            variant="contained"
+                            onClick={() => addData()}
+                            style={{ background: "#ee5253" }}
+                            className="mx-2"
+                        >
+                            <AddIcon />
+                        </Button>
                     </div>
-                    <button 
-                        type="submit"
-                        className={`btn btn-block mt-3 ${editItem ? 'btn-success' : 'btn-info'}`}
-                        style={{flex: '1'}}
-                   >
-                        {editItem ? 'Edit task' : 'Add'}
-                    </button>
-                   
-                    
-                </form>
+                    <TodoList />
+                </section>
             </div>
-        )
-    }
-}
+        </>
+    );
+};
 
-export default TodoInput;
+export default InputTodo;
