@@ -1,22 +1,18 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-//component file
+import ReactDOM from 'react-dom/client';
+import './index.css';
 import TodoContainer from './components/TodoContainer';
-//stylesheet
-import "./App.css"
-// Bootstrap CSS
-import "bootstrap/dist/css/bootstrap.min.css";
-// Bootstrap Bundle JS
-import "bootstrap/dist/js/bootstrap.bundle.min";
-//copied from code
-import 'bootstrap/dist/css/bootstrap.css'
-import './index.css'
+import { Provider } from 'react-redux';
+import store from './store';
+import ContextProvider from './components/context/ContextProvider';
 
-
-ReactDOM.render(
-    <React.StrictMode>
-        <TodoContainer />
-    </React.StrictMode>,
-
-
-    document.getElementById("root"))
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+    <ContextProvider>
+    <Provider store={store}>
+        <React.StrictMode>
+            <TodoContainer />
+        </React.StrictMode>
+    </Provider>
+    </ContextProvider>
+);
